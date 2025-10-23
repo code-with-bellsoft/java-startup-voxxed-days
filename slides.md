@@ -444,7 +444,7 @@ Let's push it even further and use the builds of premain in Leyden!
 FROM bellsoft/alpaquita-linux-base:glibc AS downloader
 ADD https://is.gd/tZhyPF /java.tar.gz # just a placeholder
 RUN apk add tar
-RUN tar -zxvf java.tar.gz && mv /jdk-24 /java
+RUN tar -zxvf java.tar.gz && mv /jdk-26 /java
 
 FROM bellsoft/alpaquita-linux-base:glibc AS builder
 ARG project
