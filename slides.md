@@ -176,7 +176,7 @@ image: /Bg-8.png
 
 
 - Java 25 LTS
-- Spring Boot 4.0
+- Spring Boot 3.5.7
 - Spring AI
 - MongoDB, Redis
 - JTE
@@ -243,11 +243,11 @@ image: /Bg-8.png
 
 ```bash
 docker compose logs chat-api bot-assistant | grep Started
-Started BotAssistantApplication in 2.108 seconds (process running for 3.181)
-Started ChatApiApplication in 2.83 seconds (process running for 3.469)
+Started BotAssistantApplication in 2.317 seconds (process running for 2.631)
+Started ChatApiApplication in 2.675 seconds (process running for 2.974)
 ```
 
-Total startup time of both services: 6.5 s
+Total startup time of both services: 5.6 s
 
 ---
 layout: image
@@ -358,7 +358,7 @@ image: /Bg-12.png
 
 Considerations:
 - Still in the makings
-- The more condensers applied, the bigger the cache
+- The more condensers applied in the future, the bigger the cache
 
 <br/>
 
@@ -487,7 +487,7 @@ ENTRYPOINT ["/java/bin/java", "-XX:CacheDataStore=./application.cds", "-jar", "/
 
 ---
 layout: image
-image: /charts/leyden-aot-cache-startup.svg
+image: /charts/cache.svg
 ---
 
 ---
@@ -917,7 +917,7 @@ background: /Bg-1.png
 
 ---
 layout: image
-image: /charts/native-image-startup.svg
+image: /charts/native-image.svg
 ---
 
 ---
@@ -929,6 +929,75 @@ image: /charts/native-image-startup.svg
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+</style>
+
+
+---
+class: statement
+layout: cover
+background: /Bg-1.png
+---
+
+# Meanwhile, in another enterprise just around the corner...
+
+<style>
+h1 {
+    font-size: 30px;
+    line-height: 1.2;
+}
+</style>
+
+---
+layout: image
+image: /Bg-8.png
+---
+
+# We might use a boost as well
+
+
+- Java 21 LTS
+- Spring Boot 3.4.5
+- Startup time of two services = 6.5 s
+
+
+<style>
+h1 {
+    font-size: 34px;
+    text-align: left;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+ul {
+    text-align: left;
+    font-size: 20px;
+}
+</style>
+
+---
+layout: image
+image: /Bg-8.png
+---
+
+# What are the options?
+
+
+- No AOT Cache
+- AppCDS + Spring AOT will yield about 50% startup reduction
+- GraalVM Native Image is an option
+
+Or...
+
+<style>
+h1 {
+    font-size: 34px;
+    text-align: left;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+ul {
+    text-align: left;
+    font-size: 20px;
 }
 </style>
 
@@ -1242,7 +1311,7 @@ Which hero are you?
 
 🛡 → AOT Cache for the smoothest integration <br>
 🎒 → Native Image for fast start <br>
-✊🏼 → CRaC for almost instant start <br>
+✊🏼 → CRaC for almost instant start with JDK 21 <br>
 
 <br>
 Testing locally? Use a power cord!
