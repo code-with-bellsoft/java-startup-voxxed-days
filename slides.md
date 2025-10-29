@@ -1,7 +1,7 @@
 ---
 theme: default
 background: /cover.png
-title: Four Approaches to Reducing Java Startup Time
+title: Three Practical Ways to Accelerate Java Services
 layout: cover
 class: text-center
 drawings:
@@ -12,7 +12,7 @@ canvasWidth: 800
 colorSchema: "dark"
 ---
 
-## Four Approaches to Reducing Java Startup Time
+## From Cold Starts to Escape Velocity: Three Practical Ways to Accelerate Java Services
 
 <img src="/bellsoft.png" width="200px" class="absolute right-10px bottom-5px"/>
 
@@ -34,7 +34,7 @@ image: "/cat.jpg"
 
 🥑 Developer Advocate at BellSoft
 
-😍Love Java, Spring, JavaFX
+😍Love Java and Spring
 
 👩‍💻Tech writer
 
@@ -293,13 +293,11 @@ layout: cover
 background: /Bg-1.png
 ---
 
-Luckily, three brave developers work at this startup:
+Luckily, two very brave developers work at this startup:
 
 The Defender
 
 The Explorer
-
-The Rebel
 
 ---
 class: text-center
@@ -357,8 +355,8 @@ image: /Bg-12.png
 - Condensers -> optimizations
 
 Considerations:
-- Still in the makings
-- The more condensers applied in the future, the bigger the cache
+- The project is in the makings
+- The more condensers applied, the bigger the cache
 
 <br/>
 
@@ -426,12 +424,12 @@ ENTRYPOINT ["java", "-Dspring.aot.enabled=true", "-XX:AOTCache=app.aot",
 
 ---
 layout: image
-image: /charts/aot-cache-startup.svg
+image: /charts/cache.svg
 ---
 
 ---
 
-# Not enough?
+# A glimpse into the future
 
 <div></div>
 
@@ -694,7 +692,7 @@ Even the Tracing Agent doesn't detect that!
 
 So, let's enable JFR explicitly:
 
-```xml {23}{maxHeight:'200px'}
+```xml {22}{maxHeight:'200px'}
 <profile>
     <id>native</id>
     <build>
@@ -716,7 +714,6 @@ So, let's enable JFR explicitly:
                     <outputDirectory>target/native</outputDirectory>
                     <mainClass>com.github.asm0dey.botassistant.BotAssistantApplication</mainClass>
                     <buildArgs>
-                        <buildArgs>--strict-image-heap</buildArgs>
                         <buildArgs>--enable-monitoring=jfr</buildArgs>
                     </buildArgs>
                 </configuration>
