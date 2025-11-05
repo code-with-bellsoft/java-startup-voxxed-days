@@ -387,6 +387,23 @@ Considerations:
 
 ---
 
+```xml
+<plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <executions>
+        <execution>
+            <id>process-aot</id>
+            <goals>
+                <goal>process-aot</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+---
+
 ```docker {1,9|11,16,17|19,23-26|28,29|31,32}{maxHeight:'350px'}
 FROM bellsoft/liberica-runtime-container:jdk-25-musl AS builder
 
@@ -433,60 +450,18 @@ image: /charts/cache.svg
 
 <div></div>
 
-Let's push it even further and use the builds of premain in Leyden!
+The builds of Leyden premain are available: https://jdk.java.net/leyden/
+Release notes: https://github.com/openjdk/leyden/blob/leyden-ea2-release-notes/README.md
 
+<img src="/leyden.png" width="500px" class="center"/>
 
----
-
-```docker {1,2,4|6,10-13,16|18,22-23,26|28,33-37|39,40|42}{maxHeight:'350px'}
-FROM bellsoft/alpaquita-linux-base:glibc AS downloader
-ADD https://is.gd/tZhyPF /java.tar.gz # just a placeholder
-RUN apk add tar
-RUN tar -zxvf java.tar.gz && mv /jdk-26 /java
-
-FROM bellsoft/alpaquita-linux-base:glibc AS builder
-ARG project
-
-WORKDIR /app
-COPY --from=downloader /java /java
-ADD ../pom.xml ./
-ADD ${project} /app/${project}
-ENV JAVA_HOME=/java \
-    project=${project}
-
-RUN cd ${project} && ./mvnw package
-
-FROM bellsoft/alpaquita-linux-base:glibc AS optimizer
-ARG project
-
-WORKDIR /app
-COPY --from=builder /app/${project}/target/*.jar app.jar
-COPY --from=downloader /java /java
-ENV project=${project}
-
-RUN /java/bin/java -Djarmode=tools -jar app.jar extract --layers --destination extracted
-
-FROM bellsoft/alpaquita-linux-base:glibc AS runner
-
-RUN apk add curl
-WORKDIR /app
-
-COPY --from=downloader /java /java
-COPY --from=optimizer /app/extracted/dependencies/ ./
-COPY --from=optimizer /app/extracted/spring-boot-loader/ ./
-COPY --from=optimizer /app/extracted/snapshot-dependencies/ ./
-COPY --from=optimizer /app/extracted/application/ ./
-
-RUN /java/bin/java -XX:CacheDataStore=./application.cds \
-    -Dspring.context.exit=onRefresh -jar /app/app.jar
-
-ENTRYPOINT ["/java/bin/java", "-XX:CacheDataStore=./application.cds", "-jar", "/app/app.jar"]
-```
-
----
-layout: image
-image: /charts/cache.svg
----
+<style>
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
 
 ---
 layout: image
@@ -687,8 +662,6 @@ h2 {
 </style>
 
 ---
-
-Even the Tracing Agent doesn't detect that!
 
 So, let's enable JFR explicitly:
 
@@ -1055,6 +1028,16 @@ Azul was the first to implement, BellSoft supports a fork
 
 ---
 
+```xml
+<dependency>
+    <groupId>org.crac</groupId>
+    <artifactId>crac</artifactId>
+    <version>1.5.0</version>
+</dependency>
+```
+
+---
+
 # Trivial example
 
 ```java {all|1|2|3|4|5-7|8}
@@ -1242,7 +1225,7 @@ public class MongoClientProxy implements MongoClient {
 
 Custom CRaC Resource
 
-```java {1,2|7-11|4,8|5,9|10|13-16|18-21|20}{maxHeight:'260px'}
+```java {1,2|6-10|12-15|17-20}{maxHeight:'260px'}
 @Component
 static public class MongoClientResource implements Resource {
 
@@ -1273,7 +1256,7 @@ static public class MongoClientResource implements Resource {
 
 Replacing `MongoClient` in the context
 
-```java {1,3|4|2,5}
+```java {1,2,3|4|5}
 @Bean
 @Primary
 public MongoClient mongoClient(MongoConnectionDetails details) {
