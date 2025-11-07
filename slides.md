@@ -38,6 +38,8 @@ image: "/cat.jpg"
 
 👩‍💻Tech writer
 
+👾CyberJAR Channel Co-host
+
 <span><line-md-twitter-x /> cat_edelveis</span>
 
 <span><logos-bluesky /> cat-edelveis.bsky.social</span>
