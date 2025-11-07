@@ -202,6 +202,15 @@ ul {
 }
 </style>
 
+---
+layout: image
+image: /bot.png
+---
+
+---
+layout: image
+image: /chat.png
+---
 
 ---
 layout: image
@@ -665,7 +674,7 @@ h2 {
 
 So, let's enable JFR explicitly:
 
-```xml {22}{maxHeight:'200px'}
+```xml {none|22}{maxHeight:'200px'}
 <profile>
     <id>native</id>
     <build>
@@ -1327,6 +1336,9 @@ image: "/qr.png"
 ---
 
 # Thank you for your attention!
+
+<br>
+Project repo: https://github.com/code-with-bellsoft/hero-guide-demo-voxxed
 
 Find me at
 
